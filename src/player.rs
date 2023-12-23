@@ -13,7 +13,7 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     ));
 }
 pub fn wasd(keyboard: Res<Input<KeyCode>>, mut player_query: Query<&mut Transform, &Player>) {
-    let speed = 0.5;
+    let speed = 0.4;
     for mut player in player_query.iter_mut() {
         let mut x_scala: f32 = 0.0;
         let mut y_scala: f32 = 0.0;
