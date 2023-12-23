@@ -8,10 +8,10 @@ pub fn spawn(mut commands: Commands) {
             SpriteBundle {
                 sprite: Sprite {
                     color: Color::BLACK,
-                    custom_size: Some(Vec2::new(352.0, 272.0)),
+                    custom_size: Some(Vec2::new(315.0, 265.0)),
                     ..default()
                 },
-                transform: Transform::from_xyz(0., 0., -1.),
+                transform: Transform::from_xyz(0., -160., -1.),
                 ..default()
             },
         ))
@@ -19,7 +19,7 @@ pub fn spawn(mut commands: Commands) {
             parent.spawn(SpriteBundle {
                 sprite: Sprite {
                     color: Color::WHITE,
-                    custom_size: Some(Vec2::new(367.0, 287.0)),
+                    custom_size: Some(Vec2::new(330.0, 280.0)),
                     ..default()
                 },
                 transform: Transform::from_xyz(0., 0., -1.),
