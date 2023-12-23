@@ -17,16 +17,16 @@ pub fn wasd(keyboard: Res<Input<KeyCode>>, mut player_query: Query<&mut Transfor
     for mut player in player_query.iter_mut() {
         let mut x_scala: f32 = 0.0;
         let mut y_scala: f32 = 0.0;
-        if keyboard.pressed(KeyCode::W) {
+        if keyboard.pressed(KeyCode::W) && player.translation.y <= 120. {
             y_scala += 1.0;
         }
-        if keyboard.pressed(KeyCode::A) {
+        if keyboard.pressed(KeyCode::A) && player.translation.x >= -160. {
             x_scala -= 1.0;
         }
-        if keyboard.pressed(KeyCode::S) {
+        if keyboard.pressed(KeyCode::S) && player.translation.y >= -120. {
             y_scala -= 1.0;
         }
-        if keyboard.pressed(KeyCode::D) {
+        if keyboard.pressed(KeyCode::D) && player.translation.x <= 160. {
             x_scala += 1.0;
         }
         let r_scala = (x_scala.powi(2) + y_scala.powi(2)).sqrt();

@@ -2,13 +2,14 @@ use bevy::{prelude::*, window::*};
 use bevy_screen_diagnostics::*;
 mod player;
 mod provatheus;
+mod stage;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Kado Project".into(),                                  //タイトル
-                resolution: (1280.0, 720.0).into(),                            //ウィンドウサイズ
+                resolution: (1280.0, 960.0).into(),                            //ウィンドウサイズ
                 position: WindowPosition::Centered(MonitorSelection::Primary), //ウィンドウの生成座標を中心に設定
                 present_mode: PresentMode::AutoVsync,                          //Vsync有効
                 resizable: false,                                              //サイズ変更不可
@@ -30,6 +31,7 @@ fn main() {
         .add_systems(Startup, player::spawn)
         .add_systems(Update, player::wasd)
         .add_systems(Startup, set_camera)
+        .add_systems(Startup, stage::spawn)
         .run();
 }
 
