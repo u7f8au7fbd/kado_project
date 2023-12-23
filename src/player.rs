@@ -6,7 +6,7 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Player,
         SpriteBundle {
-            texture: asset_server.load("./test.png"),
+            texture: asset_server.load("./textures/player.png"),
             transform: Transform::from_xyz(0., 0., 0.),
             ..default()
         },
