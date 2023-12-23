@@ -1,5 +1,6 @@
 use bevy::{prelude::*, window::*};
 use bevy_screen_diagnostics::*;
+mod player;
 mod provatheus;
 
 fn main() {
@@ -26,5 +27,14 @@ fn main() {
         .add_plugins(ScreenDiagnosticsPlugin::default())
         .add_plugins(ScreenFrameDiagnosticsPlugin)
         //以上が固定用
+        .add_systems(Startup, player::spawn)
+        .add_systems(Update, player::wasd)
+        .add_systems(Startup, set_camera)
         .run();
+}
+
+#[derive(Component)]
+struct MainCamera;
+fn set_camera(mut commands: Commands) {
+    commands.spawn((MainCamera, Camera2dBundle { ..default() }));
 }
