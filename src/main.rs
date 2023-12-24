@@ -1,5 +1,6 @@
 use bevy::{prelude::*, window::*};
 use bevy_screen_diagnostics::*;
+mod barrage;
 mod bg;
 mod player;
 mod provatheus;
@@ -34,6 +35,8 @@ fn main() {
         .add_systems(Startup, set_camera)
         .add_systems(Startup, stage::spawn)
         .add_systems(Startup, bg::spawn)
+        .add_systems(Startup, barrage::spawn)
+        .add_systems(Update, stage::change)
         .run();
 }
 

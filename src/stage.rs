@@ -1,10 +1,12 @@
 use bevy::prelude::*;
 #[derive(Component)]
-pub struct Stage;
+pub struct Stage {
+    play: bool,
+}
 pub fn spawn(mut commands: Commands) {
     commands
         .spawn((
-            Stage,
+            Stage { play: true },
             SpriteBundle {
                 sprite: Sprite {
                     color: Color::BLACK,
@@ -26,4 +28,16 @@ pub fn spawn(mut commands: Commands) {
                 ..default()
             });
         });
+}
+
+pub fn change(keyboard: Res<Input<KeyCode>>, mut stage_query: Query<(&mut Sprite, &mut Stage)>) {
+    for (mut width, mut mode) in stage_query.iter_mut() {
+        if keyboard.just_pressed(KeyCode::Space) {
+            if mode.play {
+                mode.play = false;
+            } else {
+                mode.play = true;
+            }
+        };
+    }
 }
