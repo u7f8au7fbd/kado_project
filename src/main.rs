@@ -13,7 +13,7 @@ fn main() {
                 title: "Kado Project".into(),                                  //タイトル
                 resolution: (1280.0, 960.0).into(),                            //ウィンドウサイズ
                 position: WindowPosition::Centered(MonitorSelection::Primary), //ウィンドウの生成座標を中心に設定
-                present_mode: PresentMode::Mailbox,                          //Vsync有効
+                present_mode: PresentMode::Immediate,                          //Vsync有効
                 resizable: false,                                              //サイズ変更不可
                 enabled_buttons: bevy::window::EnabledButtons {
                     minimize: false, //最小化無効
