@@ -41,9 +41,6 @@ fn main() {
         .run();
 }
 
-#[derive(Resource)]
-pub struct BonusSpawnTimer(Timer);
-
 #[derive(Component)]
 struct MainCamera;
 fn set_camera(mut commands: Commands) {
