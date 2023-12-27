@@ -2,6 +2,7 @@ use bevy::{prelude::*, window::*};
 use bevy_screen_diagnostics::*;
 mod barrage;
 mod bg;
+mod gui;
 mod player;
 mod provatheus;
 mod stage;
@@ -29,14 +30,15 @@ fn main() {
         .add_systems(Update, (provatheus::enable_visible, provatheus::gizmos_xyz)) //Provatheus用の開発用ライブラリ
         .add_plugins(ScreenDiagnosticsPlugin::default())
         .add_plugins(ScreenFrameDiagnosticsPlugin)
+        .add_systems(Startup, set_camera)
         //以上が固定用
         .add_systems(Startup, player::spawn)
         .add_systems(Update, player::wasd)
-        .add_systems(Startup, set_camera)
         .add_systems(Startup, stage::spawn)
-        .add_systems(Startup, bg::spawn)
-        .add_systems(Startup, barrage::spawn)
         .add_systems(Update, stage::change)
+        .add_systems(Startup, bg::spawn)
+        .add_systems(Startup, gui::spawn)
+        .add_systems(Update, gui::change)
         .run();
 }
 
