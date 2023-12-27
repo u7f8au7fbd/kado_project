@@ -36,11 +36,13 @@ fn main() {
         .add_systems(Update, player::wasd)
         .add_systems(Startup, stage::spawn)
         .add_systems(Update, stage::change)
-        .add_systems(Startup, bg::spawn)
         .add_systems(Startup, gui::spawn)
         .add_systems(Update, gui::change)
         .run();
 }
+
+#[derive(Resource)]
+pub struct BonusSpawnTimer(Timer);
 
 #[derive(Component)]
 struct MainCamera;
