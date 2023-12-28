@@ -24,13 +24,14 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     ));
 }
 
-pub fn change(mut text_query: Query<&mut Text, With<TextObject>>) {
+pub fn animation(mut text_query: Query<&mut Text, With<TextObject>>) {
     let base_text = String::from("＊LINE:1\n＊LINE:2\n＊LINE:3");
     let text_size: usize = base_text.chars().count();
-    for i in 0..=text_size {
+    for i in 0..text_size {
         let get_text: String = base_text.chars().take(i).collect();
         for mut text in text_query.iter_mut() {
             text.sections[0].value = get_text.clone();
+            println!("{}", get_text);
         }
     }
 }

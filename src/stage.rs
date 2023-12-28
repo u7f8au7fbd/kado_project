@@ -44,22 +44,22 @@ pub fn change(
     keyboard: Res<Input<KeyCode>>,
     mut stage_query: Query<(&mut Transform, &mut UIMode)>,
 ) {
-    let time = 3.;
+    let speed = 3.;
     for (mut width, mut mode) in stage_query.iter_mut() {
         if keyboard.just_pressed(KeyCode::Space) {
             mode.battle = !mode.battle;
         };
 
         if mode.boarder && mode.battle && width.scale.x <= 1145. {
-            width.scale.x += time;
+            width.scale.x += speed;
         } else if mode.boarder && !mode.battle && width.scale.x >= 330. {
-            width.scale.x -= time;
+            width.scale.x -= speed;
         }
 
         if !mode.boarder && mode.battle && width.scale.x <= 1130. {
-            width.scale.x += time;
+            width.scale.x += speed;
         } else if !mode.boarder && !mode.battle && width.scale.x >= 315. {
-            width.scale.x -= time;
+            width.scale.x -= speed;
         }
     }
 }
