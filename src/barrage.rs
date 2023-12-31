@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Barrage;
-pub fn spawn(mut commands: Commands) {
+pub fn _spawn(mut commands: Commands) {
     commands.spawn((
         Barrage,
         SpriteBundle {

@@ -50,6 +50,7 @@ fn main() {
 
 #[derive(Component)]
 struct MainCamera;
+
 fn set_camera(mut commands: Commands) {
     commands.spawn((MainCamera, Camera2dBundle { ..default() }));
 }
