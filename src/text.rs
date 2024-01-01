@@ -1,4 +1,19 @@
-use bevy:: prelude::*;
+use crate::GameState;
+use bevy::prelude::*;
+use serde::{Deserialize, Serialize};
+use std::fs::File;
+use std::io::Read;
+#[derive(Serialize, Deserialize)]
+struct TextConfig {
+    text: String,
+    next: usize,
+}
+
+#[derive(Serialize, Deserialize)]
+struct TextList {
+    text_config: Vec<TextConfig>,
+}
+
 #[derive(Component)]
 pub struct TextObject;
 
@@ -11,7 +26,7 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
 
     commands.spawn((
         TextObject,
-        TextBundle::from_sections([TextSection::new("TEST", default_style.clone())]).with_style(
+        TextBundle::from_sections([TextSection::new("", default_style.clone())]).with_style(
             Style {
                 position_type: PositionType::Absolute,
                 top: Val::Px(560.0),
@@ -24,18 +39,25 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     ));
 }
 
-pub fn animation(
-    mut timer: Local<f32>,
-    time: Res<Time>,
+pub fn text_system(
     mut text_query: Query<&mut Text, With<TextObject>>,
+    keyboard: Res<Input<KeyCode>>,
+    mut game_state: ResMut<GameState>,
 ) {
-    let base_text: String = "＊LINE:1\n＊LINE:2\n＊LINE:3".to_string();
-    let text_clone = base_text.clone();
-    *timer -= time.delta_seconds();
-    if *timer <= 0. {
-        *timer = 3.0;
-    }
-    for mut text in text_query.iter_mut() {
-        text.sections[0].value = text_clone.to_string();
+    let mut file = File::open("./assets/text.toml").unwrap();
+    let mut toml_str = String::new();
+    file.read_to_string(&mut toml_str).unwrap();
+    let text_list: TextList = toml::from_str(&toml_str).unwrap();
+
+    if keyboard.just_pressed(KeyCode::Space) {
+        if text_list.text_config.len() > 1 && game_state.text_num != 0 {
+            let config = &text_list.text_config[game_state.text_num];
+            for mut text in text_query.iter_mut() {
+                text.sections[0].value = config.text.to_string();
+            }
+            game_state.text_num = config.next;
+        } else {
+            game_state.fase += 1;
+        }
     }
 }

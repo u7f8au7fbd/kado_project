@@ -12,8 +12,12 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
         },
     ));
 }
-pub fn wasd(keyboard: Res<Input<KeyCode>>, mut player_query: Query<&mut Transform, &Player>) {
-    let speed = 0.4;
+pub fn wasd(
+    time: Res<Time>,
+    keyboard: Res<Input<KeyCode>>,
+    mut player_query: Query<&mut Transform, &Player>,
+) {
+    let speed = 250.;
     for mut player in player_query.iter_mut() {
         let mut x_scala: f32 = 0.0;
         let mut y_scala: f32 = 0.0;
@@ -31,8 +35,8 @@ pub fn wasd(keyboard: Res<Input<KeyCode>>, mut player_query: Query<&mut Transfor
         }
         let r_scala = (x_scala.powi(2) + y_scala.powi(2)).sqrt();
         if r_scala != 0. {
-            player.translation.x += speed * x_scala / r_scala;
-            player.translation.y += speed * y_scala / r_scala;
+            player.translation.x += speed * x_scala / r_scala * time.delta_seconds();
+            player.translation.y += speed * y_scala / r_scala * time.delta_seconds();
         }
     }
 }
