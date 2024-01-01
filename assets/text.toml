@@ -1,23 +1,23 @@
 [[text_config]]
-text = "このIDを呼び出すことは不可能だよ．どうやって表示したの？"
+text = "＊このIDを呼び出すことは不可能だよ．どうやって表示したの？"
 next = 0
 
 [[text_config]]
-text = "サンプルテキストだよ～"
+text = "＊１番のテキストだよ～"
 next = 2
 
 [[text_config]]
-text = "Jsonってだせぇよな．Deriveで直回しできる"
+text = "＊２番のテキストだよ～"
 next = 3
 
 [[text_config]]
-text = "Tomlのほうが圧倒的に扱いやすいよな"
+text = "＊３番のテキストだよ～"
 next = 4
 
 [[text_config]]
-text = "まぁ個人の環境次第だけどな"
+text = "＊４番のテキストだよ～"
 next = 5
 
 [[text_config]]
-text = "これで，最後の行のはずだ，これ以降はNULLが返されるぜ．"
+text = "＊５番のテキストだよ～"
 next = 0
