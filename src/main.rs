@@ -2,6 +2,7 @@ use bevy::{prelude::*, window::*};
 use bevy_screen_diagnostics::*;
 mod barrage;
 mod bg;
+mod debug;
 mod kado;
 mod player;
 mod provatheus;
@@ -46,7 +47,7 @@ fn main() {
         .add_systems(Startup, text::spawn)
         .add_systems(Update, text::text_system)
         .insert_resource(GameState {
-            battle: false,
+            battle: true,
             fase: 0,
             text_num: 1,
         })
