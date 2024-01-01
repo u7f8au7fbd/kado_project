@@ -3,11 +3,13 @@ use bevy::prelude::*;
 use crate::GameState;
 
 #[derive(Component)]
-pub struct MainGUI;
+pub struct MainGUI {
+    flame: bool,
+}
 
 pub fn spawn(mut commands: Commands) {
     commands.spawn((
-        MainGUI,
+        MainGUI { flame: false },
         SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(10., 10.)),
@@ -23,7 +25,7 @@ pub fn spawn(mut commands: Commands) {
         },
     ));
     commands.spawn((
-        MainGUI,
+        MainGUI { flame: true },
         SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(10., 10.)),
@@ -38,14 +40,27 @@ pub fn spawn(mut commands: Commands) {
         },
     ));
 }
-
+//1145 /1130
 pub fn change(
     time: Res<Time>,
     keyboard: Res<Input<KeyCode>>,
-    mut stage_query: Query<&mut Transform, With<MainGUI>>,
+    mut stage_query: Query<(&mut Transform, &MainGUI)>,
     mut game_state: ResMut<GameState>,
 ) {
-    if keyboard.just_pressed(KeyCode::Space) {
+    for (mut stage, layer) in stage_query.iter_mut() {
+        if game_state.battle && layer.flame {
+            stage.scale.x = 33.;
+        } else if !game_state.battle && layer.flame {
+            stage.scale.x = 114.5;
+        }
+
+        if game_state.battle && !layer.flame {
+            stage.scale.x = 31.5;
+        } else if !game_state.battle && !layer.flame {
+            stage.scale.x = 113.0;
+        }
+    }
+    if keyboard.just_pressed(KeyCode::Tab) {
         game_state.battle = !game_state.battle;
     }
 }

@@ -31,7 +31,7 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
                 position_type: PositionType::Absolute,
                 top: Val::Px(560.0),
                 left: Val::Px(100.0),
-                max_width: Val::Px(1100.),
+                max_width: Val::Px(1080.),
                 max_height: Val::Px(265.),
                 ..default()
             },
@@ -40,7 +40,7 @@ pub fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
 }
 
 pub fn text_system(
-    mut text_query: Query<&mut Text, With<TextObject>>,
+    mut text_query: Query<(&mut Text, &mut Transform), With<TextObject>>,
     keyboard: Res<Input<KeyCode>>,
     mut game_state: ResMut<GameState>,
 ) {
@@ -48,16 +48,20 @@ pub fn text_system(
     let mut toml_str = String::new();
     file.read_to_string(&mut toml_str).unwrap();
     let text_list: TextList = toml::from_str(&toml_str).unwrap();
-
-    if keyboard.just_pressed(KeyCode::Space) {
-        if text_list.text_config.len() > 1 && game_state.text_num != 0 {
-            let config = &text_list.text_config[game_state.text_num];
-            for mut text in text_query.iter_mut() {
-                text.sections[0].value = config.text.to_string();
-            }
-            game_state.text_num = config.next;
+    for (mut text, mut visible) in text_query.iter_mut() {
+        visible.scale = Vec3::new(0., 0., 0.);
+        if game_state.battle {
         } else {
-            game_state.fase += 1;
+            visible.scale = Vec3::new(1., 1., 0.);
+            if keyboard.just_pressed(KeyCode::Space) {
+                if text_list.text_config.len() > 1 && game_state.text_num != 0 {
+                    let config = &text_list.text_config[game_state.text_num];
+                    text.sections[0].value = config.text.to_string();
+                    game_state.text_num = config.next;
+                } else {
+                    game_state.fase += 1;
+                }
+            }
         }
     }
 }
