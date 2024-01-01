@@ -59,6 +59,7 @@ pub fn text_system(
                     text.sections[0].value = config.text.to_string();
                     game_state.text_num = config.next;
                 } else {
+                    game_state.battle = true;
                     game_state.fase += 1;
                 }
             }
